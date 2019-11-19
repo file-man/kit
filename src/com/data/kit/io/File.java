@@ -23,7 +23,6 @@ public class File implements AutoCloseable {
 	private Charset mCharset;
 	private boolean mAppend;
 	private java.io.File mInternal;
-	private FileInputStream mInput;
 
 	public File(String path, Charset cs, boolean append, int readBufferSize) {
 		mPath = path;

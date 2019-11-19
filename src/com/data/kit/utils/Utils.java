@@ -2,6 +2,7 @@ package com.data.kit.utils;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -56,11 +57,30 @@ public class Utils {
 		}
 	}
 
-	public static final String getMD5Checksum(byte[] data) {
+	public static String getMD5(File file) {
+		return getMD5(file, 1024 * 1024);
+	}
+	
+	public static String getMD5(File file, int cacheSize) {
+		try (FileInputStream fileInputStream = file.getFileInputStream()) {
+			MessageDigest MD5 = MessageDigest.getInstance("MD5");
+			byte[] buffer = new byte[cacheSize];
+			int length;
+			while ((length = fileInputStream.read(buffer)) != -1) {
+				MD5.update(buffer, 0, length);
+			}
+			return DatatypeConverter.printHexBinary(MD5.digest());
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+
+	public static final String getMD5(byte[] data) {
 		try {
 			MessageDigest md = MessageDigest.getInstance("MD5");
 			md.update(data);
-			return DatatypeConverter.printHexBinary(md.digest()).toUpperCase();
+			return DatatypeConverter.printHexBinary(md.digest());
 		} catch (NoSuchAlgorithmException e) {
 			Log.error(Utils.class.getName(), e);
 			e.printStackTrace();
@@ -78,8 +98,9 @@ public class Utils {
 //		byte[] b2 = new byte[] { 1, 2, 3, 4, 5, 6 };
 //		System.out.println(getMD5Checksum(b2));
 		File file = new File("/Volumes/Data/raw/viber/avatar/000/000540800-8615894633464.jpeg");
-		byte[] b = new byte[(int) file.getLength()];
+		byte[] 
+				b = new byte[(int) file.getLength()];
 		file.getFileInputStream().read(b);
-		System.out.println(getMD5Checksum(b));
+		System.out.println(getMD5(b));
 	}
 }
