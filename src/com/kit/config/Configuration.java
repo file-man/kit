@@ -1,4 +1,4 @@
-package com.data.kit.config;
+package com.kit.config;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -8,12 +8,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
-import com.data.kit.concurrent.Task;
-import com.data.kit.concurrent.Worker;
-import com.data.kit.io.FileMonitor;
-import com.data.kit.io.FileMonitor.Listener;
-import com.data.kit.utils.Log;
-import com.data.kit.utils.StringUtils;
+import com.kit.concurrent.Task;
+import com.kit.concurrent.Worker;
+import com.kit.io.FileMonitor;
+import com.kit.io.FileMonitor.Listener;
+import com.kit.utils.Log;
+import com.kit.utils.StringUtils;
 
 public class Configuration {
 

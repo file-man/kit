@@ -1,4 +1,4 @@
-package com.data.kit.concurrent;
+package com.kit.concurrent;
 
 import java.util.ArrayList;
 

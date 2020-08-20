@@ -1,9 +1,9 @@
-package com.data.kit.concurrent;
+package com.kit.concurrent;
 
 import java.util.concurrent.ArrayBlockingQueue;
 
-import com.data.kit.concurrent.WorkGroup.WorkerStatusListener;
-import com.data.kit.utils.Log;
+import com.kit.concurrent.WorkGroup.WorkerStatusListener;
+import com.kit.utils.Log;
 
 public class Worker extends Thread {
 

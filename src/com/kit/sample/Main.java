@@ -1,13 +1,13 @@
-package com.data.kit.sample;
+package com.kit.sample;
 
 import java.io.IOException;
 
-import com.data.kit.concurrent.WorkGroup;
-import com.data.kit.concurrent.Worker;
-import com.data.kit.config.Configuration;
-import com.data.kit.config.Configuration.OnConfigChangeListener;
-import com.data.kit.flow.Flow;
-import com.data.kit.utils.Log;
+import com.kit.concurrent.WorkGroup;
+import com.kit.concurrent.Worker;
+import com.kit.config.Configuration;
+import com.kit.config.Configuration.OnConfigChangeListener;
+import com.kit.flow.Flow;
+import com.kit.utils.Log;
 
 public class Main {
 
@@ -20,6 +20,11 @@ public class Main {
 		Configuration.startPropertyMonitor(new Worker("prop.monitor"));
 
 		Flow<String> flow = new Flow<String>("test-flow", 0) {
+
+			@Override
+			public void onDataHandleStart(DataHandler handler) {
+
+			}
 
 			@Override
 			public void onDataHandle(String data) {

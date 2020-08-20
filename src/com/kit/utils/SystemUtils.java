@@ -1,4 +1,4 @@
-package com.data.kit.utils;
+package com.kit.utils;
 
 public class SystemUtils {
 

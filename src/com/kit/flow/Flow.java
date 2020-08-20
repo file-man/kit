@@ -1,15 +1,15 @@
-package com.data.kit.flow;
+package com.kit.flow;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import com.data.kit.concurrent.Queue;
-import com.data.kit.concurrent.Task;
-import com.data.kit.concurrent.WorkGroup;
-import com.data.kit.concurrent.Worker;
-import com.data.kit.config.Configuration;
-import com.data.kit.utils.Log;
-import com.data.kit.utils.Utils;
+import com.kit.concurrent.Queue;
+import com.kit.concurrent.Task;
+import com.kit.concurrent.WorkGroup;
+import com.kit.concurrent.Worker;
+import com.kit.config.Configuration;
+import com.kit.utils.Log;
+import com.kit.utils.Utils;
 
 public abstract class Flow<T> {
 
@@ -29,6 +29,10 @@ public abstract class Flow<T> {
 
 	public void addData(T in) {
 		mDataQueue.add(in);
+	}
+
+	public void close() {
+		setHandlerThread(0, null);
 	}
 
 	public static final void enableMonitorLog() {
@@ -56,7 +60,16 @@ public abstract class Flow<T> {
 		return mName;
 	}
 
+	public void onDataHandleStart(DataHandler handler) {
+
+	}
 	public abstract void onDataHandle(T data);
+
+	protected boolean onDataFinish() {
+		// do nothing;
+
+		return false;
+	}
 
 	public int getQueueSize() {
 		return mDataQueue.size();
@@ -125,7 +138,7 @@ public abstract class Flow<T> {
 		return mDataQueue.get(Configuration.getIntConfig(Config.FLOW_QUEUE_GET_DATA_TIMEOUT, 500));
 	}
 
-	private final class DataHandler {
+	public final class DataHandler {
 		private boolean stop = false;
 
 		public void stop() {
@@ -133,10 +146,15 @@ public abstract class Flow<T> {
 		}
 
 		public void start() {
+			onDataHandleStart(this);
 			while (!stop) {
 				T data = getData();
 				if (data != null) {
 					onDataHandle(data);
+				} else {
+					if (onDataFinish()) {
+						stop = true;
+					}
 				}
 			}
 		}

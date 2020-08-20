@@ -1,5 +1,0 @@
-flow.queue.getdata.timeout=1000
-flow.queue.size=500
-
-log.error.path=error.log
-log.enable.tags=monitor,workgroup.monitor,flow.monitor

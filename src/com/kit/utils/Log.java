@@ -1,16 +1,13 @@
-package com.data.kit.utils;
+package com.kit.utils;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.Date;
 import java.util.List;
-import java.util.Properties;
 
-import com.data.kit.config.Configuration;
-import com.data.kit.config.Configuration.OnConfigChangeListener;
-import com.data.kit.io.File;
+import com.kit.config.Configuration;
+import com.kit.io.File;
 
 public class Log {
 
@@ -33,7 +30,7 @@ public class Log {
 	}
 
 	static {
-		Configuration.addConfigChangeListener(new OnConfigChangeListener() {
+		Configuration.addConfigChangeListener(new Configuration.OnConfigChangeListener() {
 			@Override
 			public void onConfigChange() {
 				mLogTags.clear();
@@ -71,8 +68,11 @@ public class Log {
 	public static final void error(String tag, String log) {
 		String msg = print(Tag.ERROR, tag + ": " + log);
 		if (!StringUtils.isEmpty(msg)) {
-			final File file = FileUtils.open(Configuration.getStringConfig(Config.LOG_ERROR_PATH));
-			printToFile(msg, file, false);
+			String path = Configuration.getStringConfig(Config.LOG_ERROR_PATH);
+			if (path != null) {
+				final File file = FileUtils.open(path);
+				printToFile(msg, file, false);
+			}
 		}
 	}
 

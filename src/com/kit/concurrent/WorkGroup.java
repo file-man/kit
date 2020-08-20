@@ -1,4 +1,4 @@
-package com.data.kit.concurrent;
+package com.kit.concurrent;
 
 import java.lang.management.ManagementFactory;
 import java.lang.management.ThreadInfo;
@@ -7,10 +7,8 @@ import java.util.ArrayList;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.TimeUnit;
 
-import com.data.kit.config.Configuration;
-import com.data.kit.config.Configuration.OnConfigChangeListener;
-import com.data.kit.utils.Log;
-import com.data.kit.utils.Utils;
+import com.kit.utils.Log;
+import com.kit.utils.Utils;
 
 public class WorkGroup {
 
@@ -135,29 +133,31 @@ public class WorkGroup {
 		if (size < 1) {
 			throw new RuntimeException("size must greater than 0");
 		}
-
 		mAvailable = new ArrayBlockingQueue<Worker>(size, true);
 		mWorking = new ArrayList<Worker>(size);
 		for (int i = 0; i < size; i++) {
 			mAvailable.add(new Worker("Worker " + mIndex++, mWorkerStatusListener));
 		}
-
 		mInternalWorker = new Worker("WorkGroup", size * 2 + 100);
-
-		Configuration.addConfigChangeListener(new OnConfigChangeListener() {
-
-			@Override
-			public void onConfigChange() {
-				if (Configuration.getBooleanConfig(Config.WORKGROUP_MONITOR)) {
-					if (!mIsMonitorOn) {
-						printWorkerInfo();
-						mInternalWorker.addTask(getTimerTask(5000));
-					}
-				} else {
-					mIsMonitorOn = false;
-				}
-			}
-		});
+//		Configuration.addConfigChangeListener(new OnConfigChangeListener() {
+//
+//			@Override
+//			public void onConfigChange() {
+//				System.out.println("group 7");
+//				if (Configuration.getBooleanConfig(Config.WORKGROUP_MONITOR)) {
+//					System.out.println("group 8");
+//					if (!mIsMonitorOn) {
+//						printWorkerInfo();
+//						System.out.println("group 9");
+//						mInternalWorker.addTask(getTimerTask(5000));
+//						System.out.println("group 10");
+//					}
+//				} else {
+//					mIsMonitorOn = false;
+//				}
+//				System.out.println("group 11");
+//			}
+//		});
 	}
 
 	private void printWorkerInfo() {

@@ -1,17 +1,17 @@
-package com.data.kit.concurrent;
+package com.kit.concurrent;
 
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Consumer;
 
-import com.data.kit.utils.Log;
-import com.data.kit.utils.Utils;
+import com.kit.utils.Log;
+import com.kit.utils.Utils;
 
 public class Queue<E> {
 
 	private ArrayBlockingQueue<E> mQueue;
 	private int mCapacity;
-	private int mNotifyInterval = 1000;
+	private int mNotifyInterval = 5000;
 	private String mName;
 
 	public void levelNotify() {
